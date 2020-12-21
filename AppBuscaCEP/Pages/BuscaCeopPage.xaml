@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:AppBuscaCEP.ViewModels"
+             mc:Ignorable="d"
+             x:Class="AppBuscaCEP.Pages.BuscaCepPage">
+    <ContentPage.BindingContext>
+        <viewModels:BuscaCepViewModel />
+    </ContentPage.BindingContext>
+
+    <StackLayout Padding="5,0" 
+                 Spacing="5">
+        <Entry Keyboard="Numeric" Placeholder="Informe o CEP" Text="{Binding Cep}" />
+
+        <Button Text="Buscar" Command="{Binding BuscarCommand}"/>
+
+        <ActivityIndicator IsVisible="{Binding IsBusy}}" IsRunning="{Binding IsBusy}" />
+
+        <StackLayout Spacing="2" IsVisible="{Binding HasCep}">
+            <Label Text="Logradouro" 
+               FontAttributes="Bold"/>
+            <Label x:Name="txtLogradouro" Text="{Binding Logradouro}"/>
+        </StackLayout>
+
+        <StackLayout Spacing="2" IsVisible="{Binding HasCep}">
+            <Label Text="Comeplemento" 
+               FontAttributes="Bold"/>
+            <Label x:Name="txtComeplemento" Text="{Binding Comeplemento}"/>
+        </StackLayout>
+
+        <StackLayout Spacing="2" IsVisible="{Binding HasCep}">
+            <Label Text="Bairro" 
+               FontAttributes="Bold"/>
+            <Label x:Name="txtBairro" Text="{Binding Bairro}"/>
+        </StackLayout>
+
+        <StackLayout Spacing="2" IsVisible="{Binding HasCep}">
+            <Label Text="Localidade" 
+               FontAttributes="Bold"/>
+            <Label x:Name="txtLocalidade" Text="{Binding Localidade}"/>
+        </StackLayout>
+
+        <StackLayout Spacing="2" IsVisible="{Binding HasCep}">
+            <Label Text="UF" 
+               FontAttributes="Bold"/>
+            <Label x:Name="txtUF" Text="{Binding UF}"/>
+        </StackLayout>
+
+        <StackLayout Spacing="2" IsVisible="{Binding HasCep}">
+            <Label Text="IBGE" 
+               FontAttributes="Bold"/>
+            <Label x:Name="txtIBGE" Text="{Binding IBGE}"/>
+        </StackLayout>
+
+        <StackLayout Spacing="2" IsVisible="{Binding HasCep}">
+            <Label Text="DDD" 
+               FontAttributes="Bold"/>
+            <Label x:Name="txtDDD" Text="{Binding DDD}"/>
+        </StackLayout>
+
+    </StackLayout>
+</ContentPage>
