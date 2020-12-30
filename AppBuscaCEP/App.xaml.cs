@@ -1,7 +1,6 @@
 ﻿using AppBuscaCEP.Pages;
-using System;
+using AppBuscaCEP.Services.Navigation;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace AppBuscaCEP
 {
@@ -13,7 +12,8 @@ namespace AppBuscaCEP
 
             //MainPage = new BuscaCepPage();
             //MainPage = new CepsPage();
-            MainPage = new NavigationPage(new CepsPage());
+            //MainPage = new CustomNavigationPage(new CepsPage());
+            NavigationService.Current.Initialize();
         }
 
         protected override void OnStart()

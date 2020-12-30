@@ -1,5 +1,6 @@
 ﻿using AppBuscaCEP.Data.Dto;
 using AppBuscaCEP.Pages;
+using AppBuscaCEP.Services.Navigation;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -10,7 +11,7 @@ using Xamarin.Forms;
 
 namespace AppBuscaCEP.ViewModels
 {
-    sealed class CepsViewModel : ViewModelBase
+    sealed class CepsViewModel : BasePageViewModel
     {
         private string _Cep;
         public string Cep 
@@ -165,20 +166,14 @@ namespace AppBuscaCEP.ViewModels
             }
         }
 
-        private async Task SelecionarCommandExecute(object cepDto)
+        private Task SelecionarCommandExecute(object cepDto)
         {
-            try
-            {
-                if (cepDto is ViaCedDto)
-                {
-                    await App.Current.MainPage.Navigation.PushAsync(new CepPage((ViaCedDto)cepDto));
-                }
+            return NavigationService.Current.Navigate<CepViewModel>(cepDto);
+        }
 
-            }
-            catch (Exception ex)
-            {
-                await App.Current.MainPage.DisplayAlert("Ops", "Ocorre algo de errado na consulta com a API", "Ok");
-            }
+        internal override Task InitializeAsync(object parametro)
+        {
+            return Task.Factory.StartNew(() => RefreshCommand.Execute(true));
         }
     }
 }

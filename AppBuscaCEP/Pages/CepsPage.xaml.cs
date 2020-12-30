@@ -30,13 +30,5 @@ namespace AppBuscaCEP.Pages
             //Deselect Item
             ((ListView)sender).SelectedItem = null;
         }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-
-            ViewModel.RefreshCommand.Execute(false);
-
-        }
     }
 }

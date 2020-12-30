@@ -1,13 +1,15 @@
 ﻿using AppBuscaCEP.Data.Dto;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace AppBuscaCEP.ViewModels
 {
-    class CepViewModel : ViewModelBase
+    sealed class CepViewModel : BasePageViewModel
     {
-        private readonly ViaCedDto _cepDto;
+        public CepViewModel()
+        {
+        }
+
+        private ViaCedDto _cepDto;
 
         public string Cep { get => _cepDto?.cep; }
 
@@ -15,7 +17,7 @@ namespace AppBuscaCEP.ViewModels
 
         public string Logradouro { get => _cepDto?.logradouro; }
 
-        public string Comeplemento { get => _cepDto?.complemento; }
+        public string Complemento { get => _cepDto?.complemento; }
 
         public string Bairro { get => _cepDto?.bairro; }
 
@@ -30,6 +32,21 @@ namespace AppBuscaCEP.ViewModels
         public CepViewModel(ViaCedDto cepDto)
         {
             _cepDto = cepDto;
+        }
+
+        internal override Task InitializeAsync(object parametro)
+        {
+            _cepDto = (ViaCedDto)parametro;
+
+            OnPropertyChanged(nameof(HasCep));
+            OnPropertyChanged(nameof(Logradouro));
+            OnPropertyChanged(nameof(Cep));
+            OnPropertyChanged(nameof(Complemento));
+            OnPropertyChanged(nameof(Bairro));
+            OnPropertyChanged(nameof(Localidade));
+            OnPropertyChanged(nameof(UF));
+
+            return Task.CompletedTask;
         }
     }
 }
