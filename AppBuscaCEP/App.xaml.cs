@@ -11,7 +11,8 @@ namespace AppBuscaCEP
         {
             InitializeComponent();
 
-            MainPage = new BuscaCepPage();
+            //MainPage = new BuscaCepPage();
+            MainPage = new CepsPage();
         }
 
         protected override void OnStart()

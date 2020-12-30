@@ -1,4 +1,5 @@
-﻿using AppBuscaCEP.ViewModels;
+﻿using AppBuscaCEP.Data.Dto;
+using AppBuscaCEP.ViewModels;
 using System;
 using System.ComponentModel;
 using System.Net.Http;
@@ -64,20 +65,5 @@ namespace AppBuscaCEP
                 await DisplayAlert("Ops", "Ocorre algo de errado na consulta com a API", "Ok"); 
             }
         }
-    }
-
-    public class ViaCedDto
-    {
-        public string cep { get; set; }
-        public string logradouro { get; set; }
-        public string complemento { get; set; }
-        public string bairro { get; set; }
-        public string localidade { get; set; }
-        public string uf { get; set; }
-        public string ibge { get; set; }
-        public string gia { get; set; }
-        public string ddd { get; set; }
-        public string siafi { get; set; }
-        public bool erro { get; set; } = false;
     }
 }
