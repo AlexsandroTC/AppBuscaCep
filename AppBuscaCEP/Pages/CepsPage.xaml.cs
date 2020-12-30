@@ -25,8 +25,7 @@ namespace AppBuscaCEP.Pages
             if (e.Item == null)
                 return;
 
-            await Navigation.PushAsync(new CepPage((ViaCedDto)e.Item));
-            //await DisplayAlert("Item Tapped", "An item was tapped.", "OK");
+            ViewModel.SelecionarCommand.Execute(e.Item);
 
             //Deselect Item
             ((ListView)sender).SelectedItem = null;

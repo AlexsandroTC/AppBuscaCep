@@ -1,4 +1,5 @@
 ﻿using AppBuscaCEP.Data.Dto;
+using AppBuscaCEP.Pages;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -146,6 +147,37 @@ namespace AppBuscaCEP.ViewModels
                 IsBusy = false;
 
                 BuscarCommand.ChangeCanExecute();
+            }
+        }
+
+        private Command _selecionarCommand;
+
+        public Command SelecionarCommand
+        {
+            get
+            {
+                if (_selecionarCommand is null)
+                {
+                    _selecionarCommand = new Command<object>(async (args) => await SelecionarCommandExecute(args));
+                }
+
+                return _selecionarCommand;
+            }
+        }
+
+        private async Task SelecionarCommandExecute(object cepDto)
+        {
+            try
+            {
+                if (cepDto is ViaCedDto)
+                {
+                    await App.Current.MainPage.Navigation.PushAsync(new CepPage((ViaCedDto)cepDto));
+                }
+
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Ops", "Ocorre algo de errado na consulta com a API", "Ok");
             }
         }
     }
