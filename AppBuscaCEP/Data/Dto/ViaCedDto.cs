@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 namespace AppBuscaCEP.Data.Dto
 {
     [Table("Cep")]
-    class ViaCedDto
+    public sealed class ViaCedDto
     {
         [PrimaryKey]
         public Guid Id { get; set; } = Guid.NewGuid();

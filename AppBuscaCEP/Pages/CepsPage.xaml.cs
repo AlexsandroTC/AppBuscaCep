@@ -1,10 +1,10 @@
-﻿using AppBuscaCEP.ViewModels;
+﻿using AppBuscaCEP.Data.Dto;
+using AppBuscaCEP.ViewModels;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -18,8 +18,6 @@ namespace AppBuscaCEP.Pages
         public CepsPage()
         {
             InitializeComponent();
-
-        
         }
 
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -27,7 +25,8 @@ namespace AppBuscaCEP.Pages
             if (e.Item == null)
                 return;
 
-            await DisplayAlert("Item Tapped", "An item was tapped.", "OK");
+            await Navigation.PushAsync(new CepPage((ViaCedDto)e.Item));
+            //await DisplayAlert("Item Tapped", "An item was tapped.", "OK");
 
             //Deselect Item
             ((ListView)sender).SelectedItem = null;
