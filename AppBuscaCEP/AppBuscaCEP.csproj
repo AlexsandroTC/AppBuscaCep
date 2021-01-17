@@ -35,4 +35,10 @@
   <ItemGroup>
     <Folder Include="Entity\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AppBuscaCep.Core\AppBuscaCep.Core.csproj" />
+    <ProjectReference Include="..\AppBuscaCep.Infra.EF\AppBuscaCep.Infra.EF.csproj" />
+    <ProjectReference Include="..\AppBuscaCep.Infra.Http\AppBuscaCep.Infra.Http.csproj" />
+  </ItemGroup>
 </Project>

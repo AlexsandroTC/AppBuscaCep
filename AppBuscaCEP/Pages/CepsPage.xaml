@@ -4,10 +4,7 @@
              x:Class="AppBuscaCEP.Pages.CepsPage"
              xmlns:viewModels="clr-namespace:AppBuscaCEP.ViewModels"
              Title="Ceps">
-    <ContentPage.BindingContext>
-        <viewModels:CepsViewModel />
-    </ContentPage.BindingContext>
-    
+
     <Grid Margin="0"
           Padding="5,0" 
           ColumnSpacing="0" 
