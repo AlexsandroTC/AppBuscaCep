@@ -1,4 +1,6 @@
-﻿using AppBuscaCEP.Data.Dto;
+﻿using AppBuscaCep.Core.Repository;
+using AppBuscaCep.Core.Services;
+using AppBuscaCEP.Data.Dto;
 using AppBuscaCEP.Pages;
 using AppBuscaCEP.Services.Navigation;
 using System;
@@ -13,6 +15,13 @@ namespace AppBuscaCEP.ViewModels
 {
     sealed class CepsViewModel : BasePageViewModel
     {
+        private readonly IAPIServices _apiServices;
+
+        public CepsViewModel()
+        {
+            _apiServices = DependencyService.Get<IAPIServices>();
+        }
+
         private string _Cep;
         public string Cep 
         { 
@@ -30,6 +39,7 @@ namespace AppBuscaCEP.ViewModels
         //public Command BuscarCommand => _buscarCommand ?? (_buscarCommand = new Command(async () => BuscarCommandExecute()));
         public Command BuscarCommand 
         { 
+
             get
             {
                 if (_buscarCommand is null)
@@ -53,38 +63,24 @@ namespace AppBuscaCEP.ViewModels
             {
                 if (IsBusy) return;
 
-                if (Data.DatabaseService.Current.Get<ViaCedDto>(e => e.cep.Equals(Regex.Replace(Cep, @"[^\d]", string.Empty))).Any())
+                /*if (Data.DatabaseService.Current.Get<ViaCedDto>(e => e.cep.Equals(Regex.Replace(Cep, @"[^\d]", string.Empty))).Any())
                 {
                     await App.Current.MainPage.DisplayAlert("Oops", "O CEP Já foi cadastrado.","Ok");
                     return;
-                }
+                }*/
 
                 IsBusy = true;
                 BuscarCommand.ChangeCanExecute();
 
-                using (var client = new HttpClient())
-                {
-                    ///viacep.com.br/ws/01001000/json/01001000
-                    using (var response = await client.GetAsync($"https://viacep.com.br/ws/{Cep}/json/"))
-                    {
-                        response.EnsureSuccessStatusCode();
+                var cepDto = _apiServices.ObterCep(Cep);
 
-                        var content = await response.Content.ReadAsStringAsync();
+                if (cepDto.erro)
+                    throw new InvalidOperationException();
 
-                        if (string.IsNullOrWhiteSpace(content))
-                            throw new InvalidOperationException();
+                Data.DatabaseService.Current.Save(cepDto);
 
-                        var cepDto = Newtonsoft.Json.JsonConvert.DeserializeObject<ViaCedDto>(content);
+                RefreshCommand.Execute(true);
 
-                        if (cepDto.erro)
-                            throw new InvalidOperationException();
-
-                        Data.DatabaseService.Current.Save(cepDto);
-
-                        RefreshCommand.Execute(true);
-                    }
-
-                }
             }
             catch (Exception ex)
             {
@@ -152,7 +148,6 @@ namespace AppBuscaCEP.ViewModels
         }
 
         private Command _selecionarCommand;
-
         public Command SelecionarCommand
         {
             get
